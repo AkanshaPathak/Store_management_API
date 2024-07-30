@@ -1,9 +1,22 @@
 from django.urls import path
-from . import views
+from .views import (
+    ProductListView,
+    ProductCreateView,
+    ProductDetailView,
+    ProductUpdateView,
+    ProductDeleteView,
+    CreateDummyProductsView,
+    ExportProductsCSVView,
+)
+
+app_name = 'products'  
 
 urlpatterns = [
-    path('', views.product_list, name='product_list'),
-    path('create/', views.product_create, name='product_create'),
-    path('update/<int:pk>/', views.product_update, name='product_update'),
-    path('delete/<int:pk>/', views.product_delete, name='product_delete'),
+    path('list/', ProductListView.as_view(), name='product_list'),
+    path('create/', ProductCreateView.as_view(), name='product_create'),
+    path('<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
+    path('<int:pk>/update/', ProductUpdateView.as_view(), name='product_update'),
+    path('<int:pk>/delete/', ProductDeleteView.as_view(), name='product_delete'),
+    path('generate-dummy/', CreateDummyProductsView.as_view(), name='generate_dummy'),
+    path('export/csv/', ExportProductsCSVView.as_view(), name='export_products_csv'),
 ]

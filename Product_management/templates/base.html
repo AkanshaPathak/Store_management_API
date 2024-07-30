@@ -3,18 +3,21 @@
 <html>
 <head>
     <title>{% block title %}Store{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <nav>
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'product_list' %}">Products</a>
-        <a href="{% url 'category_list' %}">Categories</a>
+        <a href="{% url 'users:home' %}">Home</a>
+        <a href="{% url 'products:product_list' %}">Products</a>
+        <a href="{% url 'category:category_list' %}">Categories</a>
         {% if user.is_authenticated %}
-            <a href="{% url 'logout' %}">Logout</a>
+        <form action="{% url 'users:logout' %}" method="post" style="display: inline;">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
         {% else %}
-            <a href="{% url 'login' %}">Login</a>
-            <a href="{% url 'register' %}">Register</a>
+            <a href="{% url 'users:login' %}">Login</a>
+            <a href="{% url 'users:register' %}">Register</a>
         {% endif %}
     </nav>
     {% block content %}{% endblock %}

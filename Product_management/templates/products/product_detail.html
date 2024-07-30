@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.title }}{% endblock %}
+
+{% block content %}
+<h1>{{ product.title }}</h1>
+<p>Category: {{ product.category.name }}</p>
+<p>Description: {{ product.description }}</p>
+<p>Price: ${{ product.price }}</p>
+<p>Status: {{ product.status }}</p>
+{% if product.video %}
+    <video width="500" height="400" controls>
+        <source src="{{ product.video.url }}" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+{% else %}
+    {% comment %} <p>No video available for this product.</p> {% endcomment %}
+{% endif %}
+<p>Created By: {{ product.created_by.username }}</p> 
+<p>Updated By: {{ product.updated_by.username }}</p>
+<a href="{% url 'products:product_update' product.id %}">Edit</a>
+<a href="{% url 'products:product_delete' product.id %}">Delete</a>
+<a href="{% url 'products:product_list' %}">Back to Product List</a>
+{% endblock %}

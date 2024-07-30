@@ -8,5 +8,5 @@
     {% csrf_token %}
     <button type="submit">Delete</button>
 </form>
-<a href="{% url 'product_list' %}">Cancel</a>
+<a href="{% url 'products:product_list' %}">Cancel</a>
 {% endblock %}

@@ -1,0 +1,21 @@
+<!-- product/templates/product/generate_dummy_data.html -->
+{% comment %} {% extends "base.html" %} {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Dummy Products</title>
+</head>
+<body>
+    <h1>Create Dummy Products</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="product_count">Number of products:</label>
+        <input type="number" id="product_count" name="product_count" min="1" required>
+        <button type="submit">Generate</button>
+    </form>
+    <p>{{ message }}</p>
+</body>
+</html>
+
