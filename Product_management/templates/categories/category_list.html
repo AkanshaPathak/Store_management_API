@@ -4,14 +4,25 @@
 
 {% block content %}
 <h1>Categories</h1>
-<a href="{% url 'category:category_create' %}">Create Category</a>
+{% if user.role == 1 or user.role == 2 %}
+    <a href="{% url 'category:category_create' %}">Create Category</a>
+{% endif %}
 <ul>
     {% for category in categories %}
         <li>
             {{ category.name }}
-            <a href="{% url 'category:category_update' category.id %}">Edit</a>
-            <a href="{% url 'category:category_delete' category.id %}">Delete</a>
+            {% if user.role == 1 %}
+                <a href="{% url 'category:category_update' category.id %}">Edit</a>
+                <a href="{% url 'category:category_delete' category.id %}">Delete</a>
+            {% elif user.role == 2 %}
+                <a href="{% url 'category:category_update' category.id %}">Edit</a>
+                
+            {% endif %}
         </li>
+    {% empty %}
+        <li>No categories available.</li>
     {% endfor %}
 </ul>
 {% endblock %}
+
+

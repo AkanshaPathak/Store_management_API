@@ -6,9 +6,13 @@ import os
 # Secret key, ensure it is securely generated and stored
 SECRET_KEY = os.urandom(32)  # 32 bytes = 256 bits for AES-256
 print("Secret Key:", SECRET_KEY.hex())
+
+
 def encrypt_data(plain_text):
     iv = os.urandom(16)  # Initialization vector for AES
-    cipher = Cipher(algorithms.AES(SECRET_KEY), modes.CBC(iv), backend=default_backend())
+    cipher = Cipher(
+        algorithms.AES(SECRET_KEY), modes.CBC(iv), backend=default_backend()
+    )
     encryptor = cipher.encryptor()
 
     # Padding to ensure the plaintext length is a multiple of block size (16 bytes for AES)
@@ -18,10 +22,13 @@ def encrypt_data(plain_text):
     encrypted_text = encryptor.update(padded_data) + encryptor.finalize()
     return iv + encrypted_text  # Combine IV and encrypted text
 
+
 def decrypt_data(encrypted_text):
     iv = encrypted_text[:16]  # Extract the first 16 bytes as the IV
     encrypted_data = encrypted_text[16:]
-    cipher = Cipher(algorithms.AES(SECRET_KEY), modes.CBC(iv), backend=default_backend())
+    cipher = Cipher(
+        algorithms.AES(SECRET_KEY), modes.CBC(iv), backend=default_backend()
+    )
     decryptor = cipher.decryptor()
 
     decrypted_data = decryptor.update(encrypted_data) + decryptor.finalize()

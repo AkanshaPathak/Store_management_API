@@ -16,12 +16,13 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+BASE_URL = 'http://127.0.0.1:8000'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_6k-^(xf_e%8(+oq9thc)xezl^d4elui%-ty98cfu3bch3bp21'
+# SECRET_KEY = 'django-insecure-_6k-^(xf_e%8(+oq9thc)xezl^d4elui%-ty98cfu3bch3bp21'
+SECRET_KEY = 'c3e475d35f5565b1c59663c527efadfb97f16bbfaabbdcb49f05c5429309c518'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -29,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# Application definition 
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -75,7 +76,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'Product_management.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -138,5 +138,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = reverse_lazy('users:login')
 LOGIN_REDIRECT_URL = reverse_lazy('users:home')
 LOGOUT_REDIRECT_URL = reverse_lazy('users:home')
+
+
+# settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'akanshafreelance1213@gmail.com'
+EMAIL_HOST_PASSWORD = 'kwrh awzk xbmk oqig'  
+DEFAULT_FROM_EMAIL = 'akanshafreelance1213@gmail.com'
+
 
 

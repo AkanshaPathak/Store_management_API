@@ -4,20 +4,25 @@
 
 {% block content %}
 <h1>Products</h1>
-<a href="{% url 'products:product_create' %}">Create Product</a>
+{% if user.role == 1 or user.role == 2 %}
+    <a href="{% url 'products:product_create' %}">Create Product</a>
+{% endif %}
 <br><br>
 <a href="{% url 'products:generate_dummy' %}">Generate Dummy Data</a>
 <br><br>
 <a href="{% url 'products:export_products_csv' %}">Export as CSV</a>
 <br><br>
-<a href="{% url 'products:product_list' %}">Products List</a> 
 <ul>
     {% for product in products %}
         <li>
             {{ product.title }} - {{ product.price }}
             <a href="{% url 'products:product_detail' product.id %}">View</a>
-            <a href="{% url 'products:product_update' product.id %}">Edit</a>
-            <a href="{% url 'products:product_delete' product.id %}">Delete</a>
+            {% if user.role == 1 %}
+                <a href="{% url 'products:product_update' product.id %}">Edit</a>
+                <a href="{% url 'products:product_delete' product.id %}">Delete</a>
+            {% elif user.role == 2 %}
+                <a href="{% url 'products:product_update' product.id %}">Edit</a>
+            {% endif %}
         </li>
     {% empty %}
         <li>No products available.</li>

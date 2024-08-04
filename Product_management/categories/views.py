@@ -1,75 +1,36 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Category
-from .forms import CategoryForm
+from categories.models import Category
+from categories.forms import CategoryForm
 
+# ListView to display all categories
 class CategoryListView(LoginRequiredMixin, ListView):
-    model = Category
-    template_name = 'categories/category_list.html'
-    context_object_name = 'categories'
+    model = Category                                 # category app Model to use for this view
+    template_name = "categories/category_list.html"   #Template to render the view
+    context_object_name = "categories"              # Context variable name in the template
+    
+    def get_queryset(self):
+        # Ensure that all users can only view the list of categories
+        return Category.objects.all()      #return all categories
 
-class CategoryCreateView(LoginRequiredMixin, CreateView):
-    model = Category
-    form_class = CategoryForm
-    template_name = 'categories/category_form.html'
-    success_url = '/categories/'  # Redirect URL after successful form submission
+# CreateView to create a new category
+class CategoryCreateView(LoginRequiredMixin, CreateView): 
+    model = Category                                # category Model to use for this view
+    form_class = CategoryForm                       # Form class to use for creating a category
+    template_name = "categories/category_form.html" # Template to render the view
+    success_url = "/categories/"                    # Redirect URL after successful form submission
 
+
+# UpdateView to update an existing category
 class CategoryUpdateView(LoginRequiredMixin, UpdateView):
     model = Category
-    form_class = CategoryForm
-    template_name = 'categories/category_form.html'
-    success_url = '/categories/'
+    form_class = CategoryForm                       # Form class to use for updating a category
+    template_name = "categories/category_form.html"
+    success_url = "/categories/"                     # Redirect URL after successful form submission
 
+# DeleteView to delete an existing category
 class CategoryDeleteView(LoginRequiredMixin, DeleteView):
     model = Category
-    template_name = 'categories/category_confirm_delete.html'
-    success_url = '/categories/'
-
-
-
-
-
-
-
-
-# from django.shortcuts import render, redirect
-# from django.contrib.auth.decorators import login_required
-# from .models import Category
-# from .forms import CategoryForm
-
-# @login_required
-# def category_list(request):
-#     categories = Category.objects.all()
-#     return render(request, 'categories/category_list.html', {'categories': categories})
-
-# @login_required
-# def category_create(request):
-#     if request.method == 'POST':
-#         form = CategoryForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('category_list')
-#     else:
-#         form = CategoryForm()
-#     return render(request, 'categories/category_form.html', {'form': form})
-
-# @login_required
-# def category_update(request, pk):
-#     category = Category.objects.get(pk=pk)
-#     if request.method == 'POST':
-#         form = CategoryForm(request.POST, instance=category)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('category_list')
-#     else:
-#         form = CategoryForm(instance=category)
-#     return render(request, 'categories/category_form.html', {'form': form})
-
-# @login_required
-# def category_delete(request, pk):
-#     category = Category.objects.get(pk=pk)
-#     if request.method == 'POST':
-#         category.delete()
-#         return redirect('category_list')
-#     return render(request, 'categories/category_confirm_delete.html', {'category': category})
+    template_name = "categories/category_confirm_delete.html"   # Template to render the view
+    success_url = "/categories/"                        # Redirect URL after successful deletion
